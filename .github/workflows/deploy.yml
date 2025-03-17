@@ -11,7 +11,7 @@ jobs:
   test:
     environment: testing
     runs-on: ubuntu-latest
-    container: 
+    container: # 이 컨테이너 설정은 test 잡의 모든 스텝들이 이 도커 컨테이너 환경에서 실행되도록 합니다. 하지만 다른 잡(예: deploy)은 영향을 받지 않습니다.
       image: node:16 # 도커 컨테이너에서 Node.js 16 버전을 사용하여 작업 실행
     env:
       MONGODB_CONNECTION_PROTOCOL: mongodb+srv
