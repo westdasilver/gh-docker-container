@@ -12,6 +12,8 @@ COPY package*.json .
 
 RUN npm install
 
+# 현재 디렉토리(.)의 모든 파일과 폴더를 도커 컨테이너의 작업 디렉토리(/app)로 복사
+# package*.json 파일은 이미 앞서 복사되었지만, 나머지 소스코드 파일들을 복사하기 위한 명령어
 COPY . .
 
 CMD ["npm", "start"]
