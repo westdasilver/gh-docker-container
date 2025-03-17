@@ -14,11 +14,17 @@ jobs:
     container: # 이 컨테이너 설정은 test 잡의 모든 스텝들이 이 도커 컨테이너 환경에서 실행되도록 합니다. 하지만 다른 잡(예: deploy)은 영향을 받지 않습니다.
       image: node:16 # 도커 컨테이너에서 Node.js 16 버전을 사용하여 작업 실행
     env:
-      MONGODB_CONNECTION_PROTOCOL: mongodb+srv
-      MONGODB_CLUSTER_ADDRESS: testcluster.9umsb.mongodb.net
-      MONGODB_USERNAME: ${{ secrets.MONGODB_USERNAME }}
-      MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
+      MONGODB_CONNECTION_PROTOCOL: mongodb # mongodb: 일반 프로토콜, mongodb+srv: MongoDB Atlas 클라우드 서비스용 프로토콜
+      MONGODB_CLUSTER_ADDRESS: mongodb # 네, GitHub Actions의 services에서 정의한 서비스명이 자동으로 DNS 호스트명으로 설정됩니다. 컨테이너 간 통신이 가능하도록 해줍니다.
+      MONGODB_USERNAME: root
+      MONGODB_PASSWORD: example
       PORT: 8080
+    services:
+      mongodb: #서비스명은 정해진 키워드가 아님
+        image: mongo:latest
+        env:
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: example
     steps:
       - name: Get Code
         uses: actions/checkout@v3
